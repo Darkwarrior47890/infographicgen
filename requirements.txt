@@ -1,0 +1,15 @@
+# Core web framework
+Flask
+
+# Production server (useful on most hosts; PythonAnywhere uses uWSGI automatically)
+gunicorn
+
+# Image processing (your code imports PIL)
+pillow
+
+# Game/graphics libs used by builder2 and for headless rendering
+pygame
+pygame_gui
+
+# HTTP client (builder likely calls an API in fetch_player_stats)
+requests
