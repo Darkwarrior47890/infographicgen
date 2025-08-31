@@ -10,9 +10,13 @@ def index():
 
 @app.route("/generate", methods=["POST"])
 def generate():
-    form = {k: request.form.get(k, "") for k in request.form.keys()}
-    fname = generate_infographic(form)
-    return redirect(url_for("serve_output", filename=fname))
+    try:
+        form = {k: request.form.get(k, "") for k in request.form.keys()}
+        fname = generate_infographic(form)
+        return redirect(url_for("serve_output", filename=fname))
+    except Exception as e:
+        app.logger.exception("Generate failed")
+        return (f"<h1>Generation failed</h1><pre>{e}</pre>", 500)
 
 @app.route("/outputs/<path:filename>")
 def serve_output(filename):
@@ -20,4 +24,4 @@ def serve_output(filename):
     return send_from_directory(outputs, filename)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000, debug=True)
+    app.run(host="0.0.0.0", port=8000, debug=True)  
